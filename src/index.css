@@ -1,0 +1,77 @@
+/* Base Styles */
+:root {
+  --primary: #f0a500;
+  --secondary: #f0a500;
+  --text: #f0f0f0;
+  --background: #1a1a1a;
+  --card-bg: #222222;
+  --card-border: #f0a500;
+  --danger: #e74c3c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Show Grid */
+.show-grid {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Loading Skeletons */
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #2a2a2a 25%, #333333 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .show-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .audio-player {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+}
