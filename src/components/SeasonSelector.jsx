@@ -1,5 +1,3 @@
-"use client"
-
 export const SeasonSelector = ({ seasons, selectedSeason, setSelectedSeason }) => {
   return (
     <div className="season-selector">

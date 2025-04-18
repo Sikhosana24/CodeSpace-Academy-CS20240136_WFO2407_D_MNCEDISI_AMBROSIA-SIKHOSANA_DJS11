@@ -1,5 +1,3 @@
-"use client"
-
 export const SortDropdown = ({ currentSort, onSortChange, options }) => {
   const defaultOptions = [
     { value: "title-asc", label: "Title A-Z" },

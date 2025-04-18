@@ -1,5 +1,3 @@
-"use client"
-
 export const ProgressBar = ({ progress, onClick }) => {
   return (
     <div className="progress-container" onClick={onClick}>

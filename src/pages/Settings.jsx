@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { useAudio } from "../contexts/AudioContext"
 import { useFavorites } from "../contexts/FavoritesContext"

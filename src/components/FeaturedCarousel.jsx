@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"

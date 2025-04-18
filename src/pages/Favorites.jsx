@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { useFavorites } from "../contexts/FavoritesContext"
 import EpisodeCard from "../components/EpisodeCard" // This is correct - importing the default export

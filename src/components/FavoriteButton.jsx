@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { useFavorites } from "../contexts/FavoritesContext"
 import { FaHeart, FaRegHeart } from "react-icons/fa"
