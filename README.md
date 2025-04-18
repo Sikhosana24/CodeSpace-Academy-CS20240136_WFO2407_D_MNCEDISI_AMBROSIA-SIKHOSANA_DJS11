@@ -32,8 +32,7 @@ AmbroCast is a modern podcast discovery and listening application built with Rea
 
 1. Clone the repository:
    \`\`\`
-   git clone https://github.com/yourusername/ambrocast.git
-   cd ambrocast
+   git clone 
    \`\`\`
 
 2. Install dependencies:
