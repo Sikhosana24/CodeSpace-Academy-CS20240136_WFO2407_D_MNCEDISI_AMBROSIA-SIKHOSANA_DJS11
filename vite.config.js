@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      react: createRequire(import.meta.url).resolve("react"),
-      "react-dom": createRequire(import.meta.url).resolve("react-dom"),
+      "react/jsx-runtime": createRequire(import.meta.url).resolve("react/jsx-runtime"),
+      "react/jsx-dev-runtime": createRequire(import.meta.url).resolve("react/jsx-dev-runtime"),
       scheduler: createRequire(import.meta.url).resolve("scheduler"),
     },
   },
