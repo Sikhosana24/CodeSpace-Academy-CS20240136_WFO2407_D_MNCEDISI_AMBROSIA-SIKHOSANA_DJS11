@@ -1,89 +1,72 @@
-# AmbroCast - Podcast Discovery App
+# AmbroCast - Improv Podcast Discovery
 
-AmbroCast is a modern podcast discovery and listening application built with React and Vite. It allows users to browse, search, and listen to a variety of podcasts.
+AmbroCast is a modern podcast discovery and listening app built with React and Vite. It lets listeners browse, search, and play podcasts while an Improv Studio generates surprise mixes based on mood, energy, and chaos.
 
 ## Features
 
-- **Browse Podcasts**: Discover podcasts from various genres
-- **Search Functionality**: Find podcasts by title with fuzzy search support
-- **Featured Carousel**: Rotating showcase of featured podcasts
-- **Favorites**: Save your favorite episodes for easy access
-- **Audio Player**: Listen to episodes with a full-featured audio player
-- **Progress Tracking**: Resume episodes from where you left off
-- **Responsive Design**: Works on desktop and mobile devices
+- **Improv Studio**: Mood, energy, and chaos controls to generate a surprise mix
+- **Browse + Search**: Filter and fuzzy search across the catalog
+- **Featured Carousel**: Rotating showcase of highlighted shows
+- **Favorites**: Save and sort favorite episodes
+- **Audio Player**: Full playback with progress tracking and resume
+- **Responsive Design**: Optimized for desktop and mobile
+- **Offline Fallback**: Cached shows display if the API is unavailable
 
 ## Technologies Used
 
 - React
 - Vite
 - React Router
-- LocalForage for client-side storage
-- Axios for API requests
+- React Helmet Async
+- LocalForage (client-side storage)
+- Axios
 - React Icons
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or later)
-- npm or yarn
+- Node.js (v18 or later recommended)
+- npm
 
 ### Installation
 
-1. Clone the repository:
-   \`\`\`
-   git clone 
-   \`\`\`
+1. Install dependencies:
+```bash
+npm install
+```
 
-2. Install dependencies:
-   \`\`\`
-   npm install
-   \`\`\`
+2. Start the development server:
+```bash
+npm run dev
+```
 
-3. Start the development server:
-   \`\`\`
-   npm run dev
-   \`\`\`
-
-4. Open your browser and navigate to `http://localhost:5173`
+3. Open your browser at `http://localhost:5173`.
 
 ## Building for Production
 
-To build the app for production:
-
-\`\`\`
+```bash
 npm run build
-\`\`\`
+```
 
-The build files will be in the `dist` directory.
+The build output is generated in the `dist` directory.
 
-## Deployment
+## Deployment (Netlify)
 
-This project is set up for easy deployment to Netlify. Simply connect your GitHub repository to Netlify and it will automatically deploy when you push changes.
+This project is ready for Netlify. Connect the GitHub repo and set:
 
-\`\`\`
+- Build command: `npm run build`
+- Publish directory: `dist`
 
-## Now, let's create a netlify.toml configuration file
+For SPA routing, add a redirect rule to `netlify.toml` (optional):
 
-```toml file="netlify.toml"
-# netlify.toml
-
+```toml
 [build]
   command = "npm run build"
   publish = "dist"
 
-# Redirect all routes to index.html for SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-# Set cache headers for assets
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Environment variables can be set here or in the Netlify UI
-[build.environment]
-  NODE_VERSION = "18"
+```
