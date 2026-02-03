@@ -6,6 +6,7 @@ export const SeasonSelector = ({ seasons, selectedSeason, setSelectedSeason }) =
           key={season.season}
           className={`season-btn ${season.season === selectedSeason ? "active" : ""}`}
           onClick={() => setSelectedSeason(season.season)}
+          type="button"
         >
           Season {season.season}
         </button>

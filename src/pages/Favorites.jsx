@@ -45,7 +45,13 @@ const Favorites = () => {
       <div className="favorites-grid">
         {sortedFavorites.length > 0 ? (
           sortedFavorites.map((fav) => (
-            <EpisodeCard key={fav.id} episode={fav} showId={fav.showId} seasonNumber={fav.seasonNumber} />
+            <EpisodeCard
+              key={fav.id}
+              episode={fav}
+              showId={fav.showId}
+              seasonNumber={fav.seasonNumber}
+              showTitle={fav.showTitle}
+            />
           ))
         ) : (
           <p className="no-favorites">You haven't added any favorites yet.</p>

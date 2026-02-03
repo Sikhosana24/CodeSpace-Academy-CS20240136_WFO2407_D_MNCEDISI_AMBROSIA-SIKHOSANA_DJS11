@@ -19,13 +19,16 @@ export const FavoritesProvider = ({ children }) => {
   }, [favorites])
 
   const addFavorite = (episode) => {
-    setFavorites((prev) => [
-      ...prev,
-      {
-        ...episode,
-        dateAdded: new Date().toISOString(),
-      },
-    ])
+    setFavorites((prev) => {
+      if (prev.some((fav) => fav.id === episode.id)) return prev
+      return [
+        ...prev,
+        {
+          ...episode,
+          dateAdded: new Date().toISOString(),
+        },
+      ]
+    })
   }
 
   const removeFavorite = (episodeId) => {

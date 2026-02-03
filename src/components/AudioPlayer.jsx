@@ -29,6 +29,8 @@ export const AudioPlayer = () => {
     if (!currentEpisode) return
 
     const audio = audioRef.current
+    setCurrentTime(0)
+    setDuration(0)
     audio.src =
       currentEpisode.file ||
       "https://file-examples.com/storage/fe8c7eef0c6364f6c9504cc/2017/11/file_example_MP3_700KB.mp3"
@@ -51,18 +53,25 @@ export const AudioPlayer = () => {
   }, [currentEpisode, isPlaying, setIsPlaying, getTimestamp])
 
   useEffect(() => {
+    if (!audioRef.current) return
+    audioRef.current.volume = isMuted ? 0 : volume
+  }, [volume, isMuted])
+
+  useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
 
     const updateAudioTime = () => setCurrentTime(audio.currentTime)
-    const updateAudioDuration = () => setDuration(audio.duration)
+    const updateAudioDuration = () => setDuration(Number.isNaN(audio.duration) ? 0 : audio.duration)
 
     audio.addEventListener("timeupdate", updateAudioTime)
     audio.addEventListener("durationchange", updateAudioDuration)
+    audio.addEventListener("loadedmetadata", updateAudioDuration)
 
     return () => {
       audio.removeEventListener("timeupdate", updateAudioTime)
       audio.removeEventListener("durationchange", updateAudioDuration)
+      audio.removeEventListener("loadedmetadata", updateAudioDuration)
     }
   }, [])
 
@@ -92,6 +101,7 @@ export const AudioPlayer = () => {
   }
 
   const formatTime = (seconds) => {
+    if (!seconds || Number.isNaN(seconds)) return "0:00"
     const mins = Math.floor(seconds / 60)
     const secs = Math.floor(seconds % 60)
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`
@@ -108,13 +118,15 @@ export const AudioPlayer = () => {
           onClick={() => setIsPlaying(!isPlaying)}
           className="play-button"
           aria-label={isPlaying ? "Pause" : "Play"}
+          type="button"
         >
           {isPlaying ? <FaPause /> : <FaPlay />}
         </button>
 
         <div className="episode-info">
           <h4>{currentEpisode.title}</h4>
-          <div className="time-display">
+          {currentEpisode.showTitle && <div className="episode-subtitle">{currentEpisode.showTitle}</div>}
+          <div className="time-display" aria-live="polite">
             {formatTime(currentTime)} / {formatTime(duration)}
           </div>
 
@@ -131,7 +143,9 @@ export const AudioPlayer = () => {
 
           <audio
             ref={audioRef}
+            preload="metadata"
             onTimeUpdate={(e) => {
+              if (!e.target.duration || Number.isNaN(e.target.duration)) return
               const progress = (e.target.currentTime / e.target.duration) * 100
               if (currentEpisode && currentEpisode.id) {
                 updateProgress(currentEpisode.id, progress, e.target.currentTime)
@@ -142,7 +156,12 @@ export const AudioPlayer = () => {
         </div>
 
         <div className="volume-controls">
-          <button onClick={toggleMute} className="volume-button" aria-label={isMuted ? "Unmute" : "Mute"}>
+          <button
+            onClick={toggleMute}
+            className="volume-button"
+            aria-label={isMuted ? "Unmute" : "Mute"}
+            type="button"
+          >
             {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
           </button>
           <input

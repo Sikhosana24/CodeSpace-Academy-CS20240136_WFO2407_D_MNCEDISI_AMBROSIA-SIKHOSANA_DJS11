@@ -41,7 +41,7 @@ const Settings = () => {
       <div className="settings-section">
         <h2>About AmbroCast</h2>
         <p>Version 1.0.0</p>
-        <p>© 2025 AmbroCast</p>
+        <p>(c) 2026 AmbroCast</p>
       </div>
     </div>
   )

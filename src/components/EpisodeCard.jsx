@@ -2,9 +2,11 @@ import { FaPlay, FaCheck, FaPause } from "react-icons/fa"
 import { useAudio } from "../contexts/AudioContext"
 import { FavoriteButton } from "./FavoriteButton"
 import { ProgressBar } from "./ProgressBar"
+import { formatDuration, formatDate } from "../utils/format"
+import { normalizeText } from "../utils/text"
 
 const EpisodeCard = ({ episode, showId, seasonNumber, showTitle }) => {
-  const { setCurrentEpisode, setIsPlaying, currentEpisode, history, getTimestamp } = useAudio()
+  const { setCurrentEpisode, setIsPlaying, currentEpisode, history, getTimestamp, isPlaying } = useAudio()
 
   const episodeProgress = history.find((h) => h.episodeId === episode.id)?.progress || 0
   const isCompleted = episodeProgress > 95
@@ -28,7 +30,7 @@ const EpisodeCard = ({ episode, showId, seasonNumber, showTitle }) => {
 
   const handlePlay = () => {
     if (isCurrentlyPlaying) {
-      setIsPlaying(false)
+      setIsPlaying(!isPlaying)
     } else {
       setCurrentEpisode({
         ...episode,
@@ -43,11 +45,11 @@ const EpisodeCard = ({ episode, showId, seasonNumber, showTitle }) => {
   return (
     <div className="episode-card">
       <div className="episode-header">
-        <h3 className="episode-title">{episode.title}</h3>
-        <FavoriteButton episode={episode} showId={showId} seasonNumber={seasonNumber} />
+        <h3 className="episode-title">{normalizeText(episode.title)}</h3>
+        <FavoriteButton episode={episode} showId={showId} seasonNumber={seasonNumber} showTitle={showTitle} />
       </div>
 
-      <p className="episode-description">{episode.description}</p>
+      <p className="episode-description">{normalizeText(episode.description)}</p>
 
       {episodeProgress > 0 && episodeProgress < 95 && (
         <>
@@ -63,8 +65,8 @@ const EpisodeCard = ({ episode, showId, seasonNumber, showTitle }) => {
 
       <div className="episode-footer">
         <div className="episode-meta">
-          <span>{new Date(episode.date).toLocaleDateString()}</span>
-          <span>{episode.duration}</span>
+          <span>{formatDate(episode.date)}</span>
+          <span>{formatDuration(episode.duration)}</span>
           {isCompleted && (
             <span className="episode-completed">
               <FaCheck /> Completed
@@ -72,7 +74,7 @@ const EpisodeCard = ({ episode, showId, seasonNumber, showTitle }) => {
           )}
         </div>
 
-        <button onClick={handlePlay} className="play-episode-btn">
+        <button onClick={handlePlay} className="play-episode-btn" type="button">
           {isCurrentlyPlaying ? (
             <>
               <FaPause /> Pause

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useFavorites } from "../contexts/FavoritesContext"
 import { FaHeart, FaRegHeart } from "react-icons/fa"
 
-export const FavoriteButton = ({ episode, showId, seasonNumber }) => {
+export const FavoriteButton = ({ episode, showId, seasonNumber, showTitle }) => {
   const { favorites, addFavorite, removeFavorite } = useFavorites()
   const [isFavorite, setIsFavorite] = useState(false)
 
@@ -14,7 +14,7 @@ export const FavoriteButton = ({ episode, showId, seasonNumber }) => {
     if (isFavorite) {
       removeFavorite(episode.id)
     } else {
-      addFavorite({ ...episode, showId, seasonNumber })
+      addFavorite({ ...episode, showId, seasonNumber, showTitle })
     }
   }
 
@@ -23,6 +23,7 @@ export const FavoriteButton = ({ episode, showId, seasonNumber }) => {
       onClick={handleToggle}
       className={`favorite-btn ${isFavorite ? "active" : ""}`}
       aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+      type="button"
     >
       {isFavorite ? <FaHeart /> : <FaRegHeart />}
     </button>

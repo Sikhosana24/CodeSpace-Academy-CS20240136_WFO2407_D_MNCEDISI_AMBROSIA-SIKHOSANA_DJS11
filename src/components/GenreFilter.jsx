@@ -1,22 +1,12 @@
 import { useState, useEffect } from "react"
+import { GENRE_OPTIONS } from "../utils/genres"
 
 export const GenreFilter = ({ selectedGenres, onGenreChange }) => {
   const [allGenres, setAllGenres] = useState([])
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    // Hardcoded genres - in a real app, these would come from the API
-    setAllGenres([
-      "Personal Growth",
-      "True Crime",
-      "History",
-      "Comedy",
-      "Entertainment",
-      "Business",
-      "Fiction",
-      "News",
-      "Kids and Family",
-    ])
+    setAllGenres(GENRE_OPTIONS.map((genre) => genre.name))
   }, [])
 
   const toggleGenre = (genre) => {
@@ -29,7 +19,7 @@ export const GenreFilter = ({ selectedGenres, onGenreChange }) => {
 
   return (
     <div className="genre-filter">
-      <button className="filter-toggle" onClick={() => setIsOpen(!isOpen)}>
+      <button className="filter-toggle" onClick={() => setIsOpen(!isOpen)} type="button">
         Genres {selectedGenres.length > 0 && `(${selectedGenres.length})`}
       </button>
 

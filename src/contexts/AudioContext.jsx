@@ -46,6 +46,7 @@ export const AudioProvider = ({ children }) => {
   }, [isPlaying])
 
   const updateProgress = (episodeId, newProgress, currentTime = 0) => {
+    setProgress(newProgress)
     setHistory((prev) => [
       ...prev.filter((item) => item.episodeId !== episodeId),
       { episodeId, progress: newProgress, timestamp: new Date() },

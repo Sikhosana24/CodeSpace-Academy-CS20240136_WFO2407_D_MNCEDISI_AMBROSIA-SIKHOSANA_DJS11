@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
+import { normalizeText } from "../utils/text"
 
 export const FeaturedCarousel = ({ shows }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -11,6 +12,7 @@ export const FeaturedCarousel = ({ shows }) => {
       // Select 5 random shows for the featured carousel
       const shuffled = [...shows].sort(() => 0.5 - Math.random())
       setFeaturedShows(shuffled.slice(0, 5))
+      setCurrentIndex(0)
     }
   }, [shows])
 
@@ -27,11 +29,11 @@ export const FeaturedCarousel = ({ shows }) => {
     if (featuredShows.length === 0) return
 
     const interval = setInterval(() => {
-      nextSlide()
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % featuredShows.length)
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [featuredShows, currentIndex])
+  }, [featuredShows.length])
 
   if (featuredShows.length === 0) return null
 
@@ -39,7 +41,12 @@ export const FeaturedCarousel = ({ shows }) => {
     <div className="featured-carousel">
       <h2 className="featured-title">Featured Podcasts</h2>
       <div className="carousel-container">
-        <button className="carousel-button prev" onClick={prevSlide}>
+        <button
+          className="carousel-button prev"
+          onClick={prevSlide}
+          aria-label="Previous featured show"
+          type="button"
+        >
           <FaChevronLeft />
         </button>
 
@@ -48,12 +55,16 @@ export const FeaturedCarousel = ({ shows }) => {
             <div key={show.id} className="carousel-slide">
               <Link to={`/shows/${show.id}`} className="carousel-link">
                 <div className="carousel-content">
-                  <img src={show.image || "/placeholder.svg"} alt={show.title} className="carousel-image" />
+                  <img
+                    src={show.image || "/placeholder.svg"}
+                    alt={normalizeText(show.title)}
+                    className="carousel-image"
+                  />
                   <div className="carousel-info">
-                    <h3>{show.title}</h3>
-                    <p className="carousel-description">{show.description?.substring(0, 120)}...</p>
+                    <h3>{normalizeText(show.title)}</h3>
+                    <p className="carousel-description">{normalizeText(show.description)?.substring(0, 120)}...</p>
                     <div className="carousel-genres">
-                      {show.genres.slice(0, 3).map((genre) => (
+                      {(show.genreNames || show.genres || []).slice(0, 3).map((genre) => (
                         <span key={genre} className="genre-tag">
                           {genre}
                         </span>
@@ -66,7 +77,12 @@ export const FeaturedCarousel = ({ shows }) => {
           ))}
         </div>
 
-        <button className="carousel-button next" onClick={nextSlide}>
+        <button
+          className="carousel-button next"
+          onClick={nextSlide}
+          aria-label="Next featured show"
+          type="button"
+        >
           <FaChevronRight />
         </button>
       </div>
@@ -77,6 +93,8 @@ export const FeaturedCarousel = ({ shows }) => {
             key={index}
             className={`carousel-indicator ${index === currentIndex ? "active" : ""}`}
             onClick={() => setCurrentIndex(index)}
+            aria-label={`Go to featured slide ${index + 1}`}
+            type="button"
           />
         ))}
       </div>

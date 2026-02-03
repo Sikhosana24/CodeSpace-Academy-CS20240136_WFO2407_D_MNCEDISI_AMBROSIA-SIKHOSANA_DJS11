@@ -14,11 +14,14 @@ export const SearchBar = ({ onSearch }) => {
     <div className="search-bar">
       <FaSearch className="search-icon" />
       <input
-        type="text"
+        type="search"
         placeholder="Search podcasts..."
         value={searchTerm}
         onChange={handleSearch}
         className="search-input"
+        aria-label="Search podcasts"
+        autoComplete="off"
+        spellCheck="false"
       />
       {searchTerm && (
         <button
@@ -27,8 +30,10 @@ export const SearchBar = ({ onSearch }) => {
             setSearchTerm("")
             onSearch("")
           }}
+          type="button"
+          aria-label="Clear search"
         >
-          ×
+          x
         </button>
       )}
     </div>

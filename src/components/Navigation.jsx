@@ -11,11 +11,18 @@ export const Navigation = () => {
         <Link to="/">
           <img src={logo || "/placeholder.svg"} alt="AmbroCast Logo" />
         </Link>
+        <div className="nav-brand">
+          <span>AmbroCast</span>
+          <small>Podcast discovery with improv</small>
+        </div>
       </div>
       <div className="nav-links">
         <Link to="/" className={`nav-link ${location.pathname === "/" ? "active" : ""}`}>
           Home
         </Link>
+        <a href="/#improv" className="nav-link">
+          Improv
+        </a>
         <Link to="/favorites" className={`nav-link ${location.pathname === "/favorites" ? "active" : ""}`}>
           Favorites
         </Link>
